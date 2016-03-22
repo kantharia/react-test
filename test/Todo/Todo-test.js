@@ -2,6 +2,7 @@ import '../setup.js';
 
 import React from 'react';
 import Todo from '../../Todo';
+import AddTodo from '../../AddTodo';
 
 import TestUtils from 'react-addons-test-utils';
 
@@ -74,5 +75,30 @@ test('Testing TODO interaction', (t) => {
 
     const todoLink = TestUtils.findRenderedDOMComponentWithTag(result, 'a');
     TestUtils.Simulate.click(todoLink);
+  });
+});
+
+
+/*
+  Testing `AddTodo` Component
+  ===========================
+ */
+test('Add Todo component', (t) => {
+  t.test('check with new props', (assert) => {
+    assert.plan(1);
+
+    const todoCallback = ({ name }) => {
+      assert.equal(name, 'Buy Milk');
+    }
+
+    const form = TestUtils.renderIntoDocument(
+      <AddTodo onNewTodo={todoCallback} />
+    );
+
+    const input = TestUtils.findRenderedDOMComponentWithTag(form, 'input');
+    input.value = 'Buy Milk';
+
+    const button = TestUtils.findRenderedDOMComponentWithTag(form, 'button');
+    TestUtils.Simulate.click(button);
   });
 });
